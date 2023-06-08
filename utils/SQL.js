@@ -1,4 +1,3 @@
-
 const sql = require('mssql');
 require('dotenv').config();
 
@@ -9,7 +8,8 @@ const config = {
   password: "mounir123",
   options: {
     encrypt: true,
-    trustServerCertificate: true
+    trustServerCertificate: true,
+    MultipleActiveResultSets: true
   }
 };
 
@@ -22,7 +22,7 @@ async function connect() {
     return pool;
   } catch (error) {
     console.error('Error connecting to SQL Server:', error);
-    throw error; // Propagate the error to the calling function
+    throw error;
   }
 }
 
@@ -37,7 +37,6 @@ async function disconnect() {
     throw error;
   }
 }
-
 
 module.exports = {
   sql,

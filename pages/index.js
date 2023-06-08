@@ -35,6 +35,12 @@ const HomePage = () => {
               <Link href="/SignUp">
                 <button type="submit" className='font-bold text-blue-900 hover:text-blue-200' style={{paddingBottom: 20, paddingLeft: 10}}>Sign Up</button>
               </Link>
+              <Link href="/Dev">
+                <button type="submit" className='font-bold text-blue-900 hover:text-blue-200' style={{paddingBottom: 20, paddingLeft: 10}}>Dev</button>
+              </Link>
+              <Link href="/Res">
+                <button type="submit" className='font-bold text-blue-900 hover:text-blue-200' style={{paddingBottom: 20, paddingLeft: 10}}>Res</button>
+              </Link>
             </view>
           </form>
         </div>

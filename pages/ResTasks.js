@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -33,7 +33,7 @@ const Tasks = () => {
   };
 
   const handleComplete = (taskId) => {
-    // Add logic for completing a task
+    // Add logic for adding a task
   };
 
   const filteredTasks = tasks.filter((task) =>
@@ -51,17 +51,11 @@ const Tasks = () => {
           <Image src={require('./Assets/Logo.png')} alt="GIF Image" width={200} height={100} />
         </div>
         <div className="flex space-x-4" style={{ paddingTop: 5 }}>
-          <Link href="/Tasks">
+          <Link href="/ResTasks">
             <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tasks</li>
           </Link>
-          <Link href="/Features">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Features</li>
-          </Link>
-          <Link href="/Ticket">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tickets</li>
-          </Link>
-          <Link href="/ContactUs">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-40 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Contact Us</li>
+          <Link href="/ResTickets">
+            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tickets   </li>
           </Link>
           <Link href="/">
             <li className="block mt-4 lg:inline-block lg:mt-0 text-black bg-blue-100 hover:text-white mr-20 bg-Sky-100 hover:bg-violet-100 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Log out</li>

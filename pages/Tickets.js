@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FiSearch } from 'react-icons/fi';
 
+
 const Tickets = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [tickets, setTickets] = useState([
@@ -17,10 +18,6 @@ const Tickets = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-  };
-
-  const handleAdd = () => {
-    // Add logic for adding a task
   };
 
   const handleDelete = (ticketId) => {
@@ -81,7 +78,6 @@ const Tickets = () => {
             />
             <Link href={"/NewTicket"}>
                 <button
-                    onClick={() => handleAdd()}
                     className="px-4 py-2 ml-96 text-white bg-green-500 rounded"
                 >
                     New Ticket

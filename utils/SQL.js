@@ -9,7 +9,6 @@ const config = {
   options: {
     encrypt: true,
     trustServerCertificate: true,
-    MultipleActiveResultSets: true
   }
 };
 

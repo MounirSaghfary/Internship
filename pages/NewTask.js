@@ -3,10 +3,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const RequestFeature = () => {
+const NewTask = () => {
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
-  const [issue, setIssue] = useState('');
+  const [task, setTask] = useState('');
   const [priority, setPriority] = useState('Low');
 
   const handleSubmit = (event) => {
@@ -16,13 +16,13 @@ const RequestFeature = () => {
     // Reset form fields
     setEmail('');
     setTitle('');
-    setIssue('');
+    setTask('');
     setPriority('Low');
   };
 
   return (
     <div>
-      <Head>
+        <Head>
         <title>Features</title>
       </Head>
 
@@ -48,75 +48,76 @@ const RequestFeature = () => {
           </Link>
         </div>
       </nav>
-      <div className="flex pt-20 justify-center items-center min-h-screen bg-gray-100">
-          <div className="w-3/4 mx-auto bg-white p-8 shadow-md rounded-md">
-          <h2 className="text-2xl font-bold mb-4">Request Feature</h2>
-          <form onSubmit={handleSubmit}>
+
+        <div className="flex pt-20 justify-center items-center min-h-screen bg-gray-100">
+            <div className="w-3/4 mx-auto bg-white p-8 shadow-md rounded-md">
+            <h2 className="text-2xl font-bold mb-4">Create New Task</h2>
+            <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="email" className="block font-semibold">
+                <label htmlFor="email" className="block font-semibold">
                 Email:
-              </label>
-              <input
+                </label>
+                <input
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
-              />
+                />
             </div>
             <div className="mb-4">
-              <label htmlFor="title" className="block font-semibold">
+                <label htmlFor="title" className="block font-semibold">
                 Title:
-              </label>
-              <input
+                </label>
+                <input
                 type="text"
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
-              />
+                />
             </div>
             <div className="mb-4">
-              <label htmlFor="issue" className="block font-semibold">
-                Justification:
-              </label>
-              <textarea
-                id="issue"
-                value={issue}
-                onChange={(e) => setIssue(e.target.value)}
+                <label htmlFor="issue" className="block font-semibold">
+                Task:
+                </label>
+                <textarea
+                id="task"
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
                 required
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
                 rows={4}
-              />
+                />
             </div>
             <div className="mb-4">
-              <label htmlFor="priority" className="block font-semibold">
+                <label htmlFor="priority" className="block font-semibold">
                 Priority:
-              </label>
-              <select
+                </label>
+                <select
                 id="priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
-              >
+                >
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
-              </select>
+                </select>
             </div>
             <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+                type="submit"
+                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
             >
-              Submit
+                Submit
             </button>
-          </form>
+            </form>
         </div>
-      </div>
+        </div>
     </div>
   );
 };
 
-export default RequestFeature;
+export default NewTask;

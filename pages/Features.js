@@ -19,10 +19,6 @@ const Features = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleAdd = () => {
-    // Add logic for adding a task
-  };
-
   const handleDelete = (taskId) => {
     // Add logic for deleting a task
     setTasks(tasks.filter((task) => task.id !== taskId));
@@ -79,12 +75,13 @@ const Features = () => {
                 onChange={handleSearch}
                 className="p-2 pr-60 mr-96 border border-gray-300 rounded"
             />
-            <button
-                  onClick={() => handleAdd(feature.id)}
-                  className="px-4 py-2 ml-96 text-white bg-green-500 rounded"
-            >
-                Request Feature
-            </button>
+            <Link href="RequestFeature">
+              <button
+                    className="px-4 py-2 ml-96 text-white bg-green-500 rounded"
+              >
+                  Request Feature
+              </button>
+            </Link>
 
         </div>
 

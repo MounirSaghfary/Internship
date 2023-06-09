@@ -1,44 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiSearch } from 'react-icons/fi';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const Tasks = () => {
+  const router = useRouter();
+  const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [tasks, setTasks] = useState([
-    { id: 1, title: 'Task 1', task: 'Complete project report'},
-    { id: 2, title: 'Task 2' , task: 'Prepare presentation slides'},
-    { id: 3, title: 'Task 3', task: 'Attend team meeting'},
-    { id: 4, title: 'Task 4', task:'Review code changes'},
-    { id: 5, title: 'Task 5', task: 'Send client update'},
 
-  ]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { email } = router.query;
+        const { data } = await axios.get(`/api/tsk?email=${email}`);
+        setTasks(data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleAdd = () => {
-    // Add logic for adding a task
-  };
-
   const handleDelete = (taskId) => {
-    // Add logic for deleting a task
-    setTasks(tasks.filter((task) => task.id !== taskId));
+    (async () => {
+    try {
+      await axios.delete(`/api/tsk?id=${taskId}`);
+      const updatedTasks = tasks.filter((task) => task.id !== taskId);
+      setTasks(updatedTasks);
+    } catch (err) {
+      console.log(err);
+    }
+    })();
   };
+  
+  
 
   const handleModify = (taskId) => {
     // Add logic for modifying a task
   };
 
   const handleComplete = (taskId) => {
-    // Add logic for adding a task
+    // Add logic for completing a task
   };
 
   const filteredTasks = tasks.filter((task) =>
-    task.task.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  task.task && task.task.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <div>
@@ -51,11 +69,17 @@ const Tasks = () => {
           <Image src={require('./Assets/Logo.png')} alt="GIF Image" width={200} height={100} />
         </div>
         <div className="flex space-x-4" style={{ paddingTop: 5 }}>
-          <Link href="/DevTasks">
+          <Link href="/Tasks">
             <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tasks</li>
           </Link>
-          <Link href="/DevFeatures">
+          <Link href="/Features">
             <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Features</li>
+          </Link>
+          <Link href="/Tickets">
+            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tickets</li>
+          </Link>
+          <Link href="/ContactUs">
+            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-40 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Contact Us</li>
           </Link>
           <Link href="/">
             <li className="block mt-4 lg:inline-block lg:mt-0 text-black bg-blue-100 hover:text-white mr-20 bg-Sky-100 hover:bg-violet-100 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Log out</li>
@@ -64,33 +88,34 @@ const Tasks = () => {
       </nav>
 
       <div className="text-3xl pt-40 font-bold" style={{ paddingLeft: '45%' }}>
-        <text>Tasks</text>
+        <h1>Tasks</h1>
       </div>
 
       <div className="p-6">
         <div className="mb-4 flex items-center">
-            <FiSearch className="mr-4" size={20} />
-            <input
-                type="text"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={handleSearch}
-                className="p-2 pr-60 mr-96 border border-gray-300 rounded"
-            />
-            <button
-                  onClick={() => handleAdd(task.id)}
-                  className="px-4 py-2 ml-96 text-white bg-green-500 rounded"
-            >
-                Add Task
+          <FiSearch className="mr-4" size={20} />
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+            className="p-2 pr-60 mr-96 border border-gray-300 rounded"
+          />
+          <Link href="/NewTask">
+            <button className="px-4 py-2 ml-96 text-white bg-green-500 rounded">
+              Add Task
             </button>
-
+          </Link>
         </div>
 
         <div className="grid grid-cols-3 gap-4 mt-5">
-          {filteredTasks.map((task) => (
+          {tasks.map((task) => (
             <div key={task.id} className="p-4 border border-gray-300 rounded">
-              <h3 className="text-lg font-bold">{task.title}</h3>
-              <h1>{task.task}</h1>
+              <h3 className="text-lg font-bold">Task {task.id}</h3>
+              <h1>{task.created_at}</h1>
+              <h1>{task.Task}</h1>
+              <h1>{task.priority}</h1>
+              <h1>{task.ends_at}</h1>
               <div className="flex justify-end">
                 <button
                   onClick={() => handleDelete(task.id)}
@@ -120,3 +145,5 @@ const Tasks = () => {
 };
 
 export default Tasks;
+
+

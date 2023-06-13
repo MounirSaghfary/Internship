@@ -28,9 +28,9 @@ const HomePage = () => {
             let user = item; 
             console.log(user)
             console.log(user.occupation)
-            if (user.occupation === 'development') {
+            if (user.occupation === 'Development') {
               router.push(`/Dev?email=${email}`);
-            } else if (user.occupation === 'network') {
+            } else if (user.occupation === 'Network') {
               router.push(`/Res?email=${email}`);
             } else {
               router.push(`/Department?email=${email}`);

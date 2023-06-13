@@ -2,8 +2,43 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from 'next/image';
 import Tasks from "./Tasks";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 
 function Devhome() {
+  const router = useRouter();
+  let em=null
+
+  useEffect(() => {
+    const { email } = router.query;
+    em=email
+    console.log('Email:', email);
+    console.log('hhhhhhhhhhh')
+  }, []);
+
+  const navigateToTasks = () => {
+    router.push({
+      pathname: '/Tasks',
+      query: { email: router.query.email }, 
+    });
+  };
+
+  const navigateToFeatures = () => {
+    router.push({
+      pathname: '/Features',
+      query: { email: router.query.email }, 
+    });
+  };
+
+  
+  const navigateToTickets = () => {
+    router.push({
+      pathname: '/Tickets',
+      query: { email: router.query.email }, 
+    });
+  };
+
   return (
     <div>
       <Head>
@@ -11,19 +46,20 @@ function Devhome() {
         {/*<link rel="icon" href={'/img/Icon.png'} />*/}
       </Head>
 
-      <nav className="flex items-center flex-wrap p-6 absolute">
-        <div className="flex items-center flex-shrink-0 font-extrabold text-black mr-40">
-          <Image src={require('./Assets/Logo.png')} alt="GIF Image" width={200} height={100} />
-        </div>
-        <div className="flex space-x-4" style={{ paddingTop: 5 }}>
-          <Link href="/Tasks"><li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tasks  </li></Link>
-          <Link href="/Features"><li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Features</li></Link>
-          <Link href="/Tickets"><li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tickets</li></Link>
-          <Link href="/Contact Us"><li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-40 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Contact Us</li></Link>
-          <Link href="/"><li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-20 bg-Sky-100 hover:bg-gray-400 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Log out</li></Link>
-        </div>
-      </nav>
 
+      <nav className="flex items-center flex-wrap p-6 absolute">
+      <div className="flex items-center flex-shrink-0 font-extrabold text-black mr-40">
+        <Image src={require('./Assets/Logo.png')} alt="GIF Image" width={200} height={100} />
+      </div>
+      <div className="flex" style={{ paddingTop: 5 }}>
+        <button onClick={navigateToTasks} className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 ml-40 px-4 py-2 rounded">Tasks</button>
+        <button onClick={navigateToFeatures} className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 ml-20 px-4 py-2 rounded">Features</button>
+        <button onClick={navigateToTickets} className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 ml-20 mr-32 px-4 py-2 rounded">Tickets</button>
+        <Link href="/">
+          <li className="block mt-4 lg:inline-block lg:mt-0 text-black bg-blue-100 hover:text-white ml-60 bg-Sky-100 hover:bg-violet-100 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Log out</li>
+        </Link>
+      </div>
+    </nav>
 
       <div className="text-3xl pt-40 font-bold" style={{paddingLeft: '45%'}}>
           <text>Dashboard</text>

@@ -2,52 +2,90 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const RequestFeature = () => {
+  let em=null
+
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
-  const [issue, setIssue] = useState('');
+  const [Justification, setIssue] = useState('');
   const [priority, setPriority] = useState('Low');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add logic to handle ticket submission
+  useEffect(() => {
+    const { email } = router.query;
+    em=email
+    console.log(email)
 
-    // Reset form fields
-    setEmail('');
-    setTitle('');
-    setIssue('');
-    setPriority('Low');
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    try {
+      await axios.post('/api/ftr', {
+        email,
+        title,
+        Justification,
+        priority,
+      });
+
+      setEmail('');
+      setTitle('');
+      setIssue('');
+      setPriority('Low');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
+  const navigateToTasks = () => {
+    router.push({
+      pathname: '/Tasks',
+      query: { email: router.query.email }, 
+    });
+  };
+
+  const navigateToFeatures = () => {
+    router.push({
+      pathname: '/Features',
+      query: { email: router.query.email }, 
+    });
+  };
+
+  
+  const navigateToTickets = () => {
+    router.push({
+      pathname: '/Tickets',
+      query: { email: router.query.email }, 
+    });
   };
 
   return (
     <div>
       <Head>
-        <title>Features</title>
+        <title> New Feature</title>
       </Head>
 
+
       <nav className="flex items-center flex-wrap p-6 absolute">
-        <div className="flex items-center flex-shrink-0 font-extrabold text-black mr-40">
-          <Image src={require('./Assets/Logo.png')} alt="GIF Image" width={200} height={100} />
-        </div>
-        <div className="flex space-x-4" style={{ paddingTop: 5 }}>
-          <Link href="/Tasks">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tasks</li>
-          </Link>
-          <Link href="/Features">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Features</li>
-          </Link>
-          <Link href="/Tickets">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-20 px-4 py-2 rounded">Tickets</li>
-          </Link>
-          <Link href="/ContactUs">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 mr-40 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Contact Us</li>
-          </Link>
-          <Link href="/">
-            <li className="block mt-4 lg:inline-block lg:mt-0 text-black bg-blue-100 hover:text-white mr-20 bg-Sky-100 hover:bg-violet-100 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Log out</li>
-          </Link>
-        </div>
-      </nav>
+      <div className="flex items-center flex-shrink-0 font-extrabold text-black mr-40">
+        <Image src={require('./Assets/Logo.png')} alt="GIF Image" width={200} height={100} />
+      </div>
+      <div className="flex" style={{ paddingTop: 5 }}>
+        <button onClick={navigateToTasks} className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 ml-40 px-4 py-2 rounded">Tasks</button>
+        <button onClick={navigateToFeatures} className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 ml-20 px-4 py-2 rounded">Features</button>
+        <button onClick={navigateToTickets} className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-gray-300 ml-20 mr-32 px-4 py-2 rounded">Tickets</button>
+        <Link href="/">
+          <li className="block mt-4 lg:inline-block lg:mt-0 text-black bg-blue-100 hover:text-white ml-60 bg-Sky-100 hover:bg-violet-100 px-4 py-2 rounded" style={{ paddingRight: 15 }}>Log out</li>
+        </Link>
+      </div>
+    </nav>
+
       <div className="flex pt-20 justify-center items-center min-h-screen bg-gray-100">
           <div className="w-3/4 mx-auto bg-white p-8 shadow-md rounded-md">
           <h2 className="text-2xl font-bold mb-4">Request Feature</h2>
@@ -84,7 +122,7 @@ const RequestFeature = () => {
               </label>
               <textarea
                 id="issue"
-                value={issue}
+                value={Justification}
                 onChange={(e) => setIssue(e.target.value)}
                 required
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
